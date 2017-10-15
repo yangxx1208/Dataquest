@@ -96,7 +96,7 @@ re.search("of Reddit",item[0]) is not None #查找
 
 ## 证书:happy::
 
-![]                                                                                                                                                                      [Dataquest](https://github.com/yangxx1208/Dataquest)/[Picture](https://github.com/yangxx1208/Dataquest/tree/master/Picture)/**Cer-of-Immedia.png**     
+![pic](https://github.com/yangxx1208/Dataquest/[Picture](https://github.com/yangxx1208/Dataquest/tree/master/Picture)/Cer-of-Immedia.png)     
 
 
 
