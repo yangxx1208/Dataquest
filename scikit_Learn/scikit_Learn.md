@@ -1,0 +1,94 @@
+# scikit-Learn
+
+[TOC]
+
+
+
+## 数据标准化、正则化
+
+### 标准化scale
+
+#### 使用sklearn.preprocessing.scale()方法
+
+~~~python
+from sklearn import preprocessing
+# standardize the data attributes
+standardized_X = preprocessing.scale(X) #按列操作
+standardized_X.mean(axis = 0) #均值（axis=0不能少，按列操作）
+standardized_X.std(axis = 0) #标准差
+
+~~~
+
+#### 使用sklearn.preprocessing.StandardScaler类
+
+~~~python
+from sklearn import preprocessing
+scaler = preprocessing.StandardScaler().fit(x) #构建类的实例
+#可以选择不进行中心化或标准化，设置参数with_mean=False/with_std=False
+#scaler = preprocessing.StandardScaler(with_mean = True, with_std = False).fit(x)
+scaler.mean_ #保存原始均值
+scaler.std_ #保存原始标准差
+standardized_X = scaler.transform(x) #返回标准化之后的数据
+scaler_data = scaler.transform(data) #对测试数据进行标准化（使用训练数据的均值、方差）
+~~~
+
+#### 使用sklearn.preprocessing.MinMaxScaler类缩放至范围，默认[0 ,1]
+
+~~~python
+min_max_scaler= preprocessing.MinMaxScaler() #构建类的实例
+#可以设置范围feature_range=(min, max)
+min_max_scaler.scale_ #缩放因子
+min_max_scaler.min_ #数据乘以缩放因子之后，需要中心化的值
+# 公式x*min_max_scaler.scale_ + min_max_scale.min_
+data_minmax = min_max_scaler.fit_transform(x) #返回缩放后的数据
+~~~
+
+### 正则化normalize
+
+####使用sklearn.preprocessing.normalize()方法
+
+```python
+from sklearn import preprocessing
+# normalize the data attributes
+normalized_X = preprocessing.normalize(X) #可以设置参数norm，选择范数类型
+#X_normalized = preprocessing.normalize(X, norm='l2') 
+```
+
+#### 使用sklearn.preprocessing.Normalizer类
+
+~~~python
+normalizer = preprocessing.Normalizer().fit(X) #返回关于数据X的实例
+norm_x = normalizer.transform(X) #返回正则化后的数据
+~~~
+
+
+
+## 特征选取
+
+```python
+from sklearn import metrics
+from sklearn.ensemble import ExtraTreesClassifier
+model = ExtraTreesClassifier() #选择的模型，决策树
+model.fit(X, y) #feature ， label
+# display the relative importance of each attribute
+print(model.feature_importances_) #输出特征的重要程度
+```
+
+
+
+## 线性回归——未完
+
+```python
+#首先计算协方差，查看适合线性回归的特征值
+pandas.DataFrame.corr()
+```
+
+## others
+
+这一章节告诉我必须要看原版帮助文档，网上的有参差不齐：[scikitLearn](http://scikit-learn.org/stable/index.html)
+
+```python
+sklearn.neighbors.KNeighborsRegressors
+sklearn.linear_model.LinearRegression
+```
+
