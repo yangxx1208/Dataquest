@@ -78,10 +78,48 @@ print(model.feature_importances_) #输出特征的重要程度
 
 ## 线性回归——未完
 
+### 模型求解
+
 ```python
 #首先计算协方差，查看适合线性回归的特征值
+#也可以使用之前特征选择的方式，选择特征值
 pandas.DataFrame.corr()
+
+from sklearn.linear_model import LinearRegression
+lr = LinearRegression()
+lr.fit(train[["Gr Liv Area"]],train["SalePrice"])
+print(lr.coef_)
+print(lr.intercept_)
+
+data_predic = lr.predict(data)
 ```
+
+公式：
+
+$$\hat{y}(w,x)=w_0+w_1x_1+...+w_px_p$$
+
+$w=(w_1,...,w_p)$ as coef_ and $w_0$ as intercept_
+
+线性回归运用最小二乘法，故而对误差尤其敏感（平方项会让系数偏向误差较大的方向）
+
+### 残差
+
+~~~python
+from sklearn.metrics import mean_squared_error
+data_rmse = mean_squared_error(data_predic,data_real)
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## others
 
