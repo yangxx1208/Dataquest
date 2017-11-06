@@ -76,7 +76,7 @@ print(model.feature_importances_) #输出特征的重要程度
 
 
 
-## 线性回归——未完
+## 线性回归
 
 ### 模型求解
 
