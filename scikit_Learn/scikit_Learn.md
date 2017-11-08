@@ -191,16 +191,6 @@ accuracy = accuracy_score(data_real, predictions)
 
 
 
-
-
-
-
-
-
-
-
-
-
 ## others
 
 这一章节告诉我必须要看原版帮助文档，网上的有参差不齐：[scikitLearn](http://scikit-learn.org/stable/index.html)
