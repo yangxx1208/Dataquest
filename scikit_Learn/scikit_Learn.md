@@ -163,6 +163,62 @@ lr = LogisticRegression()
 lr.fit(train[columns], train["Survived"])
 ~~~
 
+### k—近邻
+
+~~~python
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier(n_neighbors=1) #k近邻的k值
+scores = cross_val_score(knn, data_feature, data_result, cv=10)
+accuracy_knn = scores.mean()
+
+#训练数据集
+knn.fit(iris.data, iris.target)
+#训练准确率
+score = knn.score(iris.data, iris.target)
+#预测
+predict = knn.predict([[0.1,0.2,0.3,0.4]])
+#预测，返回概率数组
+predict2 = knn.predict_proba([[0.1,0.2,0.3,0.4]])
+~~~
+
+KNeighborsClassifier(n_neighbors=5, weights='uniform', 
+​                      algorithm='auto', leaf_size=30, 
+​                      p=2, metric='minkowski', 
+​                      metric_params=None, n_jobs=1, **kwargs)
+n_neighbors: 默认值为5，表示查询k个最近邻的数目
+algorithm:   {‘auto’, ‘ball_tree’, ‘kd_tree’, ‘brute’},指定用于计算最近邻的算法，auto表示试图采用最适合的算法计算最近邻
+leaf_size:   传递给‘ball_tree’或‘kd_tree’的叶子大小
+metric:      用于树的距离度量。默认'minkowski与P = 2（即欧氏度量）
+n_jobs:      并行工作的数量，如果设为-1，则作业的数量被设置为CPU内核的数量
+查看官方 [api](http://scikit-learn.org/dev/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn.neighbors.KNeighborsClassifier)
+
+### 决策树
+
+~~~python
+#普通
+from sklearn.ensemble import RandomForestClassifier
+clf = RandomForestClassifier(random_state=1) #random_state用于模型之后的再塑
+scores = cross_val_score(clf, all_X, all_y, cv=10)
+accuracy_rf = scores.mean()
+
+#超参数选择
+hyperparameters = {"criterion": ["entropy", "gini"], #标准
+                   "max_depth": [5, 10],  #最大深度
+                   "max_features": ["log2", "sqrt"], 
+                   "min_samples_leaf": [1, 5],
+                   "min_samples_split": [3, 5],
+                   "n_estimators": [6, 9]
+}
+
+clf = RandomForestClassifier(random_state=1)
+grid = GridSearchCV(clf,param_grid=hyperparameters,cv=10)
+
+grid.fit(all_X, all_y)
+
+best_params = grid.best_params_
+
+~~~
+
 
 
 ## 交叉验证
@@ -189,6 +245,27 @@ from sklearn.metrics import accuracy_score
 accuracy = accuracy_score(data_real, predictions)
 ~~~
 
+## 模型超参数选择
+
+~~~python
+from sklearn.model_selection import GridSearchCV
+
+hyperparameters = {
+    "n_neighbors": range(1,20,2),
+    "weights": ["distance", "uniform"],
+    "algorithm": ['brute'],
+    "p": [1,2]
+}
+knn = KNeighborsClassifier()
+grid = GridSearchCV(knn,param_grid=hyperparameters,cv=10) #这里仅仅是超参数的选择，还可以对模型进行选择
+
+grid.fit(all_X, all_y)
+best_params = grid.best_params_ #精度最高时的超参数
+best_score = grid.best_score_ #精度最高的值
+
+grid.best_estimator_ #提取参数值
+~~~
+
 
 
 ## others
@@ -199,4 +276,3 @@ accuracy = accuracy_score(data_real, predictions)
 sklearn.neighbors.KNeighborsRegressors
 sklearn.linear_model.LinearRegression
 ```
-
