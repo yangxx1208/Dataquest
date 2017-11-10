@@ -219,7 +219,7 @@ best_params = grid.best_params_
 
 ~~~
 
-
+[官方文档](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
 
 ## 交叉验证
 
