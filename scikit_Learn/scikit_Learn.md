@@ -223,11 +223,29 @@ best_params = grid.best_params_
 
 ## 交叉验证
 
+### 单个模型交叉验证
+
 ~~~python
 from sklearn.model_selection import cross_val_score
 lr = LogisticRegression()
 scores = cross_val_score(lr, all_X, all_y, cv=10)
 ~~~
+
+### 交叉验证多个模型
+
+~~~python
+from sklearn.model_selection import GridSearchCV
+hyperparameters = {
+    "n_neighbors": range(1,20,2),
+    "weights": ["distance", "uniform"],
+    "algorithm": ['brute'],
+    "p": [1,2]
+}
+knn = KNeighborsClassifier()
+grid = GridSearchCV(knn,param_grid=hyperparameters,cv=10)
+~~~
+
+
 
 ## 误差分析
 
